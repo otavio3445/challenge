@@ -348,14 +348,11 @@ body {
 }
 
 .orderBtnsLogin {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 15px;
 }
 
-.orderBtnsLogin>.btnLogin {
-  margin: 0;
+.orderBtnsLogin > .btnLogin{
+  margin-bottom: 35px;
 }
 
 .containerPerfil {

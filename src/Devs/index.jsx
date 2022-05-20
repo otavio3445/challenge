@@ -198,7 +198,7 @@ function Devs() {
                 </div>
             </div>
             <div className="backBtn" onClick={() => window.location.href = "/"}>
-                Sair
+                Voltar
             </div>
         </>
     )

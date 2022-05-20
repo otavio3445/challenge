@@ -313,7 +313,7 @@ function Candidato() {
                 </div>
             </div>
 
-            <div className="backBtn" onClick={() => window.location.href = "/"}>
+            <div className="backBtn" onClick={() => window.location.href = "/perfil"}>
                 Voltar
             </div>
         </>

@@ -144,7 +144,7 @@ function Cadastro() {
       </div>
       {showModal && modalTeste()}
       <div className="backBtn" onClick={() => window.location.href = "/loginCandidato"}>
-        Sair
+        Voltar
       </div>
     </div>
   )

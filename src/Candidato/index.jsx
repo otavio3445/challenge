@@ -304,17 +304,17 @@ function Candidato() {
                     />
                 </div>
                 <div className="mainContentLogin">
-                    <div className="candidatoHolder">
-                        <h1>Cursos</h1>
-                        {cardsCurso()}
+                    <div className="candidatoHolderVagas">
                         <h1>Vagas</h1>
                         {cardsVagas()}
+                        <h1>Cursos</h1>
+                        {cardsCurso()}
                     </div>
                 </div>
             </div>
-            
-            <div className="btnBack" onClick={() => window.location.href= '/'}>
-            &lsaquo;
+
+            <div className="backBtn" onClick={() => window.location.href = "/"}>
+                Voltar
             </div>
         </>
     )

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick/lib/slider';
 import '../index.css';
 
 function Cadastro() {
@@ -32,7 +31,7 @@ function Cadastro() {
           {testeVoc === true ? page02() : ''}
           {testeVoc === false ? page03() : ''}
         </div> : ''}
-        {showEnd && <div className='btnConcluir' onClick={() => window.location.href = '/'}>Concluir Cadastro</div>}
+        {showEnd && <div className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir Cadastro</div>}
 
       </form>
     )
@@ -49,7 +48,7 @@ function Cadastro() {
           <option>Agile Coach</option>
           <option>Scrum Master</option>
         </select>
-        <div className='btnConcluir' onClick={() => window.location.href = '/'}>Concluir Cadastro</div>
+        <div className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir Cadastro</div>
       </div>
     )
   }
@@ -144,10 +143,9 @@ function Cadastro() {
         {page01()}
       </div>
       {showModal && modalTeste()}
-      
-      <div className="btnBack" onClick={() => window.location.href= '/'}>
-            &lsaquo;
-            </div>
+      <div className="backBtn" onClick={() => window.location.href = "/"}>
+        Sair
+      </div>
     </div>
   )
 }

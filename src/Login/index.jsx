@@ -97,12 +97,13 @@ function Login() {
                     />
                 </div>
                 <div className="mainContentLogin">
-                    <div className="newCad" onClick={() => window.location.href="/cadastro"}>
-                        Quero ser EY
-                    </div>
                     <div className="souEy" onClick={() => window.location.href="/login"}>
-                        Já sou EY
+                        Sou da EY
                     </div>
+                    <div className="newCad" onClick={() => window.location.href="/loginCandidato"}>
+                        Quero ser da EY
+                    </div>
+                    <div className="desenvolvedores" onClick={() => window.location.href="/Devs"}>Desenvolvedores</div>
                 </div>
             </div>
         </>

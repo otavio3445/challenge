@@ -46,7 +46,7 @@ body {
 .mainCadastro {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(rgb(255, 201, 5), white);
+  background-image: linear-gradient(rgb(255, 74, 5), rgb(87, 87, 87));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,11 +149,15 @@ body {
   cursor: pointer;
 }
 
-.candidatoHolder {
+.candidatoHolder, .candidatoHolderVagas {
   width: 90vw;
-  height: 90vh;
+  height: 65vh;
   box-sizing: border-box;
   background-color: rgb(255, 255, 255, .85);
+}
+
+.candidatoHolderVagas {
+  height: 85vh;
 }
 
 .candidatoHeader {
@@ -178,30 +182,36 @@ body {
   font-family: sans-serif;
 }
 
-.card-curso-holder, .card-vaga-holder {
+.card-curso-holder,
+.card-vaga-holder {
   text-align: center;
   height: 30vh;
   display: flex !important;
   justify-content: center;
 }
 
-.card-curso, .card-vaga {
+.card-curso,
+.card-vaga {
   width: 90%;
 }
-.card-curso:hover, .card-vaga:hover {
+
+.card-curso:hover,
+.card-vaga:hover {
   transform: scale(1.1);
 }
 
-.candidatoHolder > h1 {
+.candidatoHolder>h1, .candidatoHolderVagas>h1{
   display: flex;
   justify-content: center;
   font-family: monospace;
 }
-.candidatoHolder > h1:not(:first-child) {
+
+.candidatoHolder>h1:not(:first-child) {
   padding-top: 40px;
 }
 
-.card-curso-header, .card-vaga-header {
+.card-curso-header,
+.card-vaga-header {
   height: 10rem;
   align-items: center;
   display: flex;
@@ -213,17 +223,19 @@ body {
   border-radius: 35px 35px 0 0;
 }
 
-.card-curso-footer, .card-vaga-footer, .card-candidato-footer {
+.card-curso-footer,
+.card-vaga-footer,
+.card-candidato-footer {
   background-color: #8f0000;
-    padding: 0;
-    margin: 0;
-    height: 3rem;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-family: monospace;
-    font-size: 19px;
-    color: white;
+  padding: 0;
+  margin: 0;
+  height: 3rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family: monospace;
+  font-size: 19px;
+  color: white;
 }
 
 .card-vaga-header {
@@ -231,7 +243,8 @@ body {
   border-radius: 10px 10px 0 0;
 }
 
-.card-vaga-footer, .card-candidato-footer {
+.card-vaga-footer,
+.card-candidato-footer {
   cursor: pointer;
   background-color: #2e8f00;
 }
@@ -266,4 +279,161 @@ body {
   justify-content: center;
   font-size: 41px;
   cursor: pointer;
+}
+
+.formLogin {
+  text-align: center;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  background-color: rgb(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.formLogin>div>h2 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 28px;
+}
+
+.formLogin>div>div>input {
+  height: 25px;
+  width: 20rem;
+  margin-bottom: 10px;
+}
+
+.backBtn {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  background-color: yellow;
+  width: 150px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 0px #000000;
+}
+
+.backBtn:hover {
+  background-color: #fcba03;
+}
+
+.btnLogin,
+.btnVagas {
+  background-color: rgb(161, 0, 0);
+  color: #fff;
+  width: 150px;
+  margin: 0 auto;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 0px 0px 10px 0px #000000;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btnLogin:hover,
+.btnVagas:hover {
+  cursor: pointer;
+  background-color: red;
+}
+
+.orderBtnsLogin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.orderBtnsLogin>.btnLogin {
+  margin: 0;
+}
+
+.containerPerfil {
+  width: 100vw;
+  height: 100vh;
+  background-color: #e9e9e9;
+}
+
+.subcontainerPerfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  position: relative;
+}
+
+.btnVagas {
+  width: 230px;
+  padding: 15% 10%;
+  box-sizing: border-box;
+}
+
+.cvUpload {
+  position: absolute;
+  bottom: 0;
+}
+
+.infoHolder {
+  height: 100%;
+  width: 50%;
+  margin-left: 70px;
+  margin-top: 50px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.inforSubHolder {
+  padding: 5% 2% 0;
+}
+
+.btnEdit {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.btnEdit:hover {
+  background-color: #c8c8c8;
+}
+
+.desenvolvedores {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  padding: 20px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  transition: all 3 ease;
+}
+
+.desenvolvedores:hover {
+  transition: all 3 ease;
+  background-image: linear-gradient(rgb(0, 0, 0), rgb(99, 99, 99));
+}
+
+.dev {
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
 }

@@ -31,7 +31,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Renan Silva</h4>
                             <p>Perfil: Desenvolvedor Back-end</p>
@@ -45,7 +45,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 02" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Maira Luz</h4>
                             <p>Perfil: Desenvolvedor Back-end</p>
@@ -59,7 +59,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 03" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Bruna Zimmerman</h4>
                             <p>Perfil: QA</p>
@@ -73,7 +73,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 04" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Thiago Silva</h4>
                             <p>Perfil: Desenvolvedor Front-end</p>
@@ -87,7 +87,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Patrícia Lopes</h4>
                             <p>Perfil: Analista de Infra</p>
@@ -101,7 +101,7 @@ function Recrutador() {
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
-                                <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
                             <h4>Nome: Joaquim Medeiros</h4>
                             <p>Perfil: UX Design</p>
@@ -217,7 +217,6 @@ function Recrutador() {
                                             "size": 40,
                                             "opacity": 0.8,
                                             "speed": 3,
-                                            "color": "#ff0000"
                                         },
                                         "repulse": {
                                             "distance": 200
@@ -251,8 +250,8 @@ function Recrutador() {
                     </div>
                 </div>
             </div>
-            <div className="btnBack" onClick={() => window.location.href= '/'}>
-            &lsaquo;
+            <div className="backBtn" onClick={() => window.location.href = "/"}>
+                Sair
             </div>
         </>
     )

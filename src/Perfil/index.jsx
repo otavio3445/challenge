@@ -69,7 +69,7 @@ function Perfil() {
                     }}>{btnName ? 'Editar' : 'Salvar'}</div>
                 </div>
             </div>
-            <div className="backBtn" onClick={() => window.location.href = "/"}>
+            <div className="backBtn" onClick={() => window.location.href = "/loginCandidato"}>
                 Voltar
             </div>
         </div>

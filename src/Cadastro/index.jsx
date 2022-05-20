@@ -130,6 +130,9 @@ function Cadastro() {
               settesteVoc(null)
             }
             }>Salvar</div>
+            <div className="backBtn" onClick={() => setShowModal(false)}>
+              Voltar
+            </div>
           </div>
         </div>
       </div>

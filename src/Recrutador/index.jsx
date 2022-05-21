@@ -251,7 +251,7 @@ function Recrutador() {
                 </div>
             </div>
             <div className="backBtn" onClick={() => window.location.href = "/"}>
-                Voltar
+                Sair
             </div>
         </>
     )

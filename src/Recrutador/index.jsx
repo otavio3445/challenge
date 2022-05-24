@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../index.css';
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
@@ -6,10 +6,14 @@ import Slider from 'react-slick/lib/slider';
 
 function Recrutador() {
 
+    const [senior, setsenior] = useState(true);
+    const [pleno, setpleno] = useState(true);
+    const [junior, setjunior] = useState(true);
+
     const settings = {
         dots: true,
-        infinite: true,
-        autoplay: true,
+        infinite: false,
+        autoplay: false,
         autoplaySpeed: 3500,
         speed: 1000,
         slidesToShow: 4,
@@ -27,90 +31,96 @@ function Recrutador() {
     const cardsVagas = () => {
         return (
             <Slider {...settings}>
-                <div className="card-candidato-holder">
+                {pleno && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Renan Silva</h4>
-                            <p>Perfil: Desenvolvedor Back-end</p>
+                            <h4 style={{ margin: '0' }}>Nome: Renan Silva</h4>
+                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Back-end</p>
+                            <p style={{ margin: '0' }}>Nível: Pleno</p>
                         </div>
-                        <div className="card-candidato-footer">
+                        <div className="card-candidato-footer" onClick={() => window.location.href = '/perfilReview'}>
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
-                <div className="card-candidato-holder">
+                </div>}
+                {pleno && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 02" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Maira Luz</h4>
-                            <p>Perfil: Desenvolvedor Back-end</p>
+                            <h4 style={{ margin: '0' }}>Nome: Maira Luz</h4>
+                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Back-end</p>
+                            <p style={{ margin: '0' }}>Nível: Pleno</p>
                         </div>
                         <div className="card-candidato-footer">
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
-                <div className="card-candidato-holder">
+                </div>}
+                {junior && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 03" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Bruna Zimmerman</h4>
-                            <p>Perfil: QA</p>
+                            <h4 style={{ margin: '0' }}>Nome: Bruna Zimmerman</h4>
+                            <p style={{ margin: '0' }}>Perfil: QA</p>
+                            <p style={{ margin: '0' }}>Nível: Júnior</p>
                         </div>
                         <div className="card-candidato-footer">
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
-                <div className="card-candidato-holder">
+                </div>}
+                {senior && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 04" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Thiago Silva</h4>
-                            <p>Perfil: Desenvolvedor Front-end</p>
+                            <h4 style={{ margin: '0' }}>Nome: Thiago Silva</h4>
+                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Front-end</p>
+                            <p style={{ margin: '0' }}>Nível: Sênior</p>
                         </div>
                         <div className="card-candidato-footer">
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
-                <div className="card-candidato-holder">
+                </div>}
+                {junior && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Patrícia Lopes</h4>
-                            <p>Perfil: Analista de Infra</p>
+                            <h4 style={{ margin: '0' }}>Nome: Patrícia Lopes</h4>
+                            <p style={{ margin: '0' }}>Perfil: Analista de Infra</p>
+                            <p style={{ margin: '0' }}>Nível: Júnior</p>
                         </div>
                         <div className="card-candidato-footer">
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
-                <div className="card-candidato-holder">
+                </div>}
+                {junior && <div className="card-candidato-holder">
                     <div className="card-candidato">
                         <div className="card-candidato-header">
                             <div className="candidatoImg">
                                 <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                             </div>
-                            <h4>Nome: Joaquim Medeiros</h4>
-                            <p>Perfil: UX Design</p>
+                            <h4 style={{ margin: '0' }}>Nome: Joaquim Medeiros</h4>
+                            <p style={{ margin: '0' }}>Perfil: UX Design</p>
+                            <p style={{ margin: '0' }}>Nível: Júnior</p>
                         </div>
                         <div className="card-candidato-footer">
                             <p>Saiba Mais</p>
                         </div>
                     </div>
-                </div>
+                </div>}
             </Slider>
         )
     }
@@ -246,6 +256,41 @@ function Recrutador() {
                     <div className="candidatoHolder">
 
                         <h1>Candidatos:</h1>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label>Filtrar por:</label>
+                            <select onChange={(e) => {
+                                switch (e.target.selectedIndex) {
+                                    case 0:
+                                        setjunior(true);
+                                        setpleno(true);
+                                        setsenior(true);
+                                        break;
+                                    case 1:
+                                        setjunior(false);
+                                        setpleno(false);
+                                        setsenior(true);
+
+                                        break;
+                                    case 2:
+                                        setjunior(false);
+                                        setpleno(true);
+                                        setsenior(false);
+
+                                        break;
+                                    case 3:
+                                        setjunior(true);
+                                        setpleno(false);
+                                        setsenior(false);
+
+                                        break;
+                                }
+                            }}>
+                                <option>Todos</option>
+                                <option>Sênior</option>
+                                <option>Pleno</option>
+                                <option>Júnior</option>
+                            </select>
+                        </div>
                         {cardsVagas()}
                     </div>
                 </div>

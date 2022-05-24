@@ -5,7 +5,9 @@ function Cadastro() {
 
   const [testeVoc, settesteVoc] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalTeste, setShowModalTeste] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
+  const [level, setLevel] = useState('');
 
   const page01 = () => {
     return (
@@ -15,6 +17,8 @@ function Cadastro() {
         <input type="password" placeholder='Digite sua senha' />
         <input type="password" placeholder='Repita sua senha' />
         <input type="number" name="" id="" placeholder='Digite sua idade' />
+        <input type="text" placeholder='Link do GitHub' />
+        <input type="text" placeholder='Link do LinkedIn' />
         <div className="btnsTeste">
           <div>
             <input type="radio" name="btnTeste" id="btnSei"
@@ -48,7 +52,9 @@ function Cadastro() {
           <option>Agile Coach</option>
           <option>Scrum Master</option>
         </select>
-        <div className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir Cadastro</div>
+        <div className='btnConcluir' onClick={() => setShowModalTeste(!showModalTeste)}>Fazer Teste de Conhecimento</div>
+        <p style={{ color: 'white' }}>{level !== '' ? level : ''}</p>
+        {level !== '' ? <div style={{backgroundColor: 'lime'}} className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir</div> : ''}
       </div>
     )
   }
@@ -139,6 +145,71 @@ function Cadastro() {
     )
   }
 
+  const modalTesteConhecimento = () => {
+    return (
+      <div className='modalTeste'>
+        <div style={{
+          display: 'block',
+          padding: '0 50px 10px 50px',
+          border: '1px dotted black',
+          overflow: 'auto',
+          backgroundColor: 'rgb(227, 227, 227, .5)'
+        }}>
+          <h1>Bem vindo(a) ao teste de conhecimentos da EY!</h1>
+          <h3>Preencha atentamente as perguntas abaixo:</h3>
+          <hr></hr>
+          <div className="perguntasHolder">
+            <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <p>Qual tag a seguir permite tanto estilizar quanto utilização de pequenas imagens:</p>
+              <div>
+                <input type="radio" name="opcao01"/>img
+                <input type="radio" name="opcao01"/>i
+                <input type="radio" name="opcao01"/>icon
+                <input type="radio" name="opcao01"/>p
+              </div>
+            </div>
+            <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <p>Qual dos itens a seguir não é exclusivo de um Pré-processador CSS:</p>
+              <div>
+                <input type="radio" name="opcao02"/>Mixins
+                <input type="radio" name="opcao02"/>Variáveis
+                <input type="radio" name="opcao02"/>'&' selector
+                <input type="radio" name="opcao02"/>'~' selector
+              </div>
+            </div>
+            <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <p>Qual a última versão lançada da linguagem HTML?</p>
+              <div>
+                <input type="radio" name="opcao03"/>5
+                <input type="radio" name="opcao03"/>9
+                <input type="radio" name="opcao03"/>6
+                <input type="radio" name="opcao03"/>3
+              </div>
+            </div>
+            <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <p>Como previnir uma submissão de form no click de um elemento Submit?</p>
+              <div>
+                <input type="radio" name="opcao04"/>defaultPrevent()
+                <input type="radio" name="opcao04"/>preventDefault()
+                <input type="radio" name="opcao04"/>cancelDefault()
+                <input type="radio" name="opcao04"/>stopDefault()
+              </div>
+            </div>
+            
+            <div className="btnSalvarTeste" onClick={() => {
+              setLevel('Seu nível é: Júnior')
+              setShowModalTeste(false)
+            }
+            }>Salvar</div>
+            <div className="backBtn" onClick={() => setShowModal(false)}>
+              Voltar
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="mainCadastro">
       <div className="formCadastro">
@@ -146,6 +217,7 @@ function Cadastro() {
         {page01()}
       </div>
       {showModal && modalTeste()}
+      {showModalTeste && modalTesteConhecimento()}
       <div className="backBtn" onClick={() => window.location.href = "/loginCandidato"}>
         Voltar
       </div>

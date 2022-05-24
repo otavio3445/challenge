@@ -151,7 +151,7 @@ body {
 
 .candidatoHolder, .candidatoHolderVagas {
   width: 90vw;
-  height: 65vh;
+  height: 75vh;
   box-sizing: border-box;
   background-color: rgb(255, 255, 255, .85);
 }
@@ -382,6 +382,7 @@ body {
 }
 
 .infoHolder {
+  background-color: white;
   height: 100%;
   width: 50%;
   margin-left: 70px;
@@ -391,7 +392,7 @@ body {
 }
 
 .inforSubHolder {
-  padding: 5% 2% 0;
+  padding: 2% 2% 0;
 }
 
 .btnEdit {
@@ -433,4 +434,30 @@ body {
   width: fit-content;
   margin: 0 auto;
   text-align: center;
+}
+
+.iframesHolder {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 2%;
+  font-size: 20px;
+  font-weight: bold;
+}
+.iframesHolder > p{
+  margin: 0;
+}
+
+.downloadCv {
+  text-decoration: none;
+  color: #000000;
+  font-family: monospace;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.downloadCv:hover {
+  color: #777777;
+}
+
+.pProgress {
+  min-width: 175px;
 }

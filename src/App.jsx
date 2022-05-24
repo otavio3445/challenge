@@ -7,6 +7,7 @@ import Login from './Login';
 import LoginCandidato from './LoginCandidato';
 import LoginRecrutador from './LoginRecrutador';
 import Perfil from './Perfil';
+import PerfilRec from './PerfilRec';
 import Recrutador from './Recrutador';
 
 const src = () => {
@@ -16,6 +17,7 @@ const src = () => {
         <Route path="/" element={<Login/>} />
         <Route path="/cadastro" element={<Cadastro/>} />
         <Route path="/perfil" element={<Perfil/>} />
+        <Route path="/perfilReview" element={<PerfilRec/>} />
         <Route path="/Devs" element={<Devs/>} />
         <Route path="/login" element={<LoginRecrutador/>} />
         <Route path="/loginCandidato" element={<LoginCandidato/>} />

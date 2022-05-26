@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../index.css';
+import {db} from '../firebase-config';
+import {collection, addDoc} from 'firebase/firestore'
 
 function Cadastro() {
 
@@ -9,16 +11,41 @@ function Cadastro() {
   const [showEnd, setShowEnd] = useState(false);
   const [level, setLevel] = useState('');
 
+  const [name, setname] = useState('');
+  const [age, setage] = useState('');
+  const [email, setemail] = useState('');
+  const [senha, setsenha] = useState('');
+  const [typeUser, settypeUser] = useState('Front-end');
+  const [levelUser, setlevelUser] = useState('');
+  const [github, setgithub] = useState('');
+  const [linkedin, setlinkedin] = useState('');
+
+  const userCollectionRef = collection(db, 'users');
+
+  const cadastrar = async(name, age, email, senha, typeUser, levelUser, github, linkedin) => {
+
+    await addDoc(userCollectionRef, {
+      name: name,
+      age: age,
+      email: email,
+      senha: senha,
+      level: levelUser,
+      type: typeUser,
+      github: github,
+      linkedin: linkedin
+    });
+    window.location.href = '/perfil'
+  }
+
   const page01 = () => {
     return (
       <form>
-        <input type="text" placeholder='Digite seu nome' />
-        <input type="email" placeholder='Digite seu Email' />
-        <input type="password" placeholder='Digite sua senha' />
-        <input type="password" placeholder='Repita sua senha' />
-        <input type="number" name="" id="" placeholder='Digite sua idade' />
-        <input type="text" placeholder='Link do GitHub' />
-        <input type="text" placeholder='Link do LinkedIn' />
+        <input type="text" placeholder='Digite seu nome' onChange={(e) => setname(e.target.value)} />
+        <input type="email" placeholder='Digite seu Email' onChange={(e) => setemail(e.target.value)}/>
+        <input type="password" placeholder='Digite sua senha' onChange={(e) => setsenha(e.target.value)}/>
+        <input type="number" name="" id="" placeholder='Digite sua idade' onChange={(e) => setage(e.target.value)}/>
+        <input type="text" placeholder='Link do GitHub' onChange={(e) => setgithub(e.target.value)}/>
+        <input type="text" placeholder='Link do LinkedIn' onChange={(e) => setlinkedin(e.target.value)}/>
         <div className="btnsTeste">
           <div>
             <input type="radio" name="btnTeste" id="btnSei"
@@ -35,7 +62,9 @@ function Cadastro() {
           {testeVoc === true ? page02() : ''}
           {testeVoc === false ? page03() : ''}
         </div> : ''}
-        {showEnd && <div className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir Cadastro</div>}
+        {showEnd && <div className='btnConcluir' 
+        onClick={() => cadastrar(name, age, email, senha, typeUser, levelUser, github, linkedin)}>
+          Concluir Cadastro</div>}
 
       </form>
     )
@@ -43,18 +72,27 @@ function Cadastro() {
   const page02 = () => {
     return (
       <div>
-        <select className='selectArea'>
+        <select className='selectArea' onChange={(e) => {
+          if (e.target.selectedIndex === 0) {
+            settypeUser('Front-end')
+          } else if (e.target.selectedIndex === 1) {
+            settypeUser('Back-end')
+          } else if (e.target.selectedIndex === 2) {
+            settypeUser('QA')
+          }else if (e.target.selectedIndex === 3) {
+            settypeUser('Infraestrutura')
+          }
+        }}>
           <option>Desenvolvimento Fron-end</option>
           <option>Desenvolvimento Back-end</option>
           <option>Automação</option>
-          <option>UX Design</option>
           <option>Infraestrutura</option>
-          <option>Agile Coach</option>
-          <option>Scrum Master</option>
         </select>
         <div className='btnConcluir' onClick={() => setShowModalTeste(!showModalTeste)}>Fazer Teste de Conhecimento</div>
         <p style={{ color: 'white' }}>{level !== '' ? level : ''}</p>
-        {level !== '' ? <div style={{backgroundColor: 'lime'}} className='btnConcluir' onClick={() => window.location.href = '/perfil'}>Concluir</div> : ''}
+        {level !== '' ? <div style={{backgroundColor: 'lime'}} className='btnConcluir' 
+        onClick={() => cadastrar(name, age, email, senha, typeUser, levelUser, github, linkedin)}>
+          Concluir</div> : ''}
       </div>
     )
   }
@@ -131,6 +169,16 @@ function Cadastro() {
             </div>
 
             <div className="btnSalvarTeste" onClick={() => {
+              let number = (Math.random()*100).toFixed(0);
+              if (Number(number) >=75) {
+                settypeUser('Front-end')
+              } else if (Number(number) >=50) {
+                settypeUser('Back-end')
+              } else if (Number(number) >=25) {
+                settypeUser('QA')
+              } else {
+                settypeUser('Infraestrutura')
+              }
               setShowModal(false)
               setShowEnd(true)
               settesteVoc(null)
@@ -197,8 +245,18 @@ function Cadastro() {
             </div>
             
             <div className="btnSalvarTeste" onClick={() => {
-              setLevel('Seu nível é: Júnior')
-              setShowModalTeste(false)
+              let number = (Math.random()*100).toFixed(0);
+              let nivel = ''
+              if (Number(number) >=64) {
+                nivel =  'Sênior'
+              } else if (Number(number) >=34) {
+                nivel =  'Pleno'
+              } else {
+                nivel =  'Júnior'
+              }
+              setlevelUser(nivel);
+              setLevel(`Seu nível é: ${nivel}`);
+              setShowModalTeste(false);
             }
             }>Salvar</div>
             <div className="backBtn" onClick={() => setShowModal(false)}>

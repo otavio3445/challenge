@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.css';
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
 import Slider from 'react-slick/lib/slider';
+import { db } from '../firebase-config';
+import { collection, getDocs } from 'firebase/firestore'
 
 function Recrutador() {
 
     const [senior, setsenior] = useState(true);
     const [pleno, setpleno] = useState(true);
     const [junior, setjunior] = useState(true);
+    const [users, setusers] = useState([]);
+    const usersCollectionRef = collection(db, "users")
+
+    useEffect(() => {
+        const getUser = async () => {
+            const data = await getDocs(usersCollectionRef);
+            setusers(data.docs.map((doc) => ({ ...doc.data() })));
+        }
+        getUser();
+    }, []);
 
     const settings = {
         dots: true,
@@ -31,101 +43,43 @@ function Recrutador() {
     const cardsVagas = () => {
         return (
             <Slider {...settings}>
-                {pleno && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                {
+                    users.map(user => {
+                        const layout = <div className="card-candidato-holder">
+                            <div className="card-candidato">
+                                <div className="card-candidato-header">
+                                    <div className="candidatoImg">
+                                        <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                                    </div>
+                                    <h4 style={{ margin: '0' }}>Nome: {user.name}</h4>
+                                    <p style={{ margin: '0' }}>Perfil: {user.type}</p>
+                                    <p style={{ margin: '0' }}>Nível: {user.level}</p>
+                                </div>
+                                <div className="card-candidato-footer" onClick={() => window.location.href = '/perfilReview'}>
+                                    <p>Saiba Mais</p>
+                                </div>
                             </div>
-                            <h4 style={{ margin: '0' }}>Nome: Renan Silva</h4>
-                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Back-end</p>
-                            <p style={{ margin: '0' }}>Nível: Pleno</p>
                         </div>
-                        <div className="card-candidato-footer" onClick={() => window.location.href = '/perfilReview'}>
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
-                {pleno && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 02" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
-                            </div>
-                            <h4 style={{ margin: '0' }}>Nome: Maira Luz</h4>
-                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Back-end</p>
-                            <p style={{ margin: '0' }}>Nível: Pleno</p>
-                        </div>
-                        <div className="card-candidato-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
-                {junior && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 03" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
-                            </div>
-                            <h4 style={{ margin: '0' }}>Nome: Bruna Zimmerman</h4>
-                            <p style={{ margin: '0' }}>Perfil: QA</p>
-                            <p style={{ margin: '0' }}>Nível: Júnior</p>
-                        </div>
-                        <div className="card-candidato-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
-                {senior && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 04" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
-                            </div>
-                            <h4 style={{ margin: '0' }}>Nome: Thiago Silva</h4>
-                            <p style={{ margin: '0' }}>Perfil: Desenvolvedor Front-end</p>
-                            <p style={{ margin: '0' }}>Nível: Sênior</p>
-                        </div>
-                        <div className="card-candidato-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
-                {junior && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
-                            </div>
-                            <h4 style={{ margin: '0' }}>Nome: Patrícia Lopes</h4>
-                            <p style={{ margin: '0' }}>Perfil: Analista de Infra</p>
-                            <p style={{ margin: '0' }}>Nível: Júnior</p>
-                        </div>
-                        <div className="card-candidato-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
-                {junior && <div className="card-candidato-holder">
-                    <div className="card-candidato">
-                        <div className="card-candidato-header">
-                            <div className="candidatoImg">
-                                <img alt="candidato 06" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
-                            </div>
-                            <h4 style={{ margin: '0' }}>Nome: Joaquim Medeiros</h4>
-                            <p style={{ margin: '0' }}>Perfil: UX Design</p>
-                            <p style={{ margin: '0' }}>Nível: Júnior</p>
-                        </div>
-                        <div className="card-candidato-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>}
+                        if (junior === true && user.level === 'Júnior') {
+                            return layout
+                        } 
+                        if (pleno === true && user.level === 'Pleno') {
+                            return layout
+                        } 
+                        if (senior === true && user.level === 'Sênior') {
+                            return layout
+                        } 
+                        
+                    })
+                }
             </Slider>
         )
     }
     return (
         <>
+            {
+                users.map(user => console.log(user))
+            }
             <div style={{ position: 'relative' }}>
                 <div style={{ position: 'absolute', zIndex: -1 }}>
                     <Particles

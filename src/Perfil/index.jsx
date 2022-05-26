@@ -28,9 +28,9 @@ function Perfil() {
                         <div className="btnVagas" onClick={() => window.location.href = '/vagasecursos'}>
                             Visualizar Vagas e Cursos
                         </div>
-                        <div className="btnVagas" style={{backgroundColor: '#00a500'}} onClick={() => window.location.href = '/vagasecursos'}>
+                        {/* <div className="btnVagas" style={{backgroundColor: '#00a500'}} onClick={() => window.location.href = '/vagasecursos'}>
                             Aprimorar-se
-                        </div>
+                        </div> */}
                         <div className='cvUpload'>
                             <p>Envie seu CV</p>
                             <input type="file" name="" id="" />

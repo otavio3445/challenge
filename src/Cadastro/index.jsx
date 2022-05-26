@@ -90,7 +90,7 @@ function Cadastro() {
         </select>
         <div className='btnConcluir' onClick={() => setShowModalTeste(!showModalTeste)}>Fazer Teste de Conhecimento</div>
         <p style={{ color: 'white' }}>{level !== '' ? level : ''}</p>
-        {level !== '' ? <div style={{backgroundColor: 'lime'}} className='btnConcluir' 
+        {level !== '' ? <div style={{backgroundColor: 'yellow'}} className='btnConcluir' 
         onClick={() => cadastrar(name, age, email, senha, typeUser, levelUser, github, linkedin)}>
           Concluir</div> : ''}
       </div>
@@ -216,6 +216,7 @@ function Cadastro() {
                 <input type="radio" name="opcao01"/>p
               </div>
             </div>
+            <hr/>
             <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
               <p>Qual dos itens a seguir não é exclusivo de um Pré-processador CSS:</p>
               <div>
@@ -225,6 +226,7 @@ function Cadastro() {
                 <input type="radio" name="opcao02"/>'~' selector
               </div>
             </div>
+            <hr/>
             <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
               <p>Qual a última versão lançada da linguagem HTML?</p>
               <div>
@@ -234,12 +236,12 @@ function Cadastro() {
                 <input type="radio" name="opcao03"/>3
               </div>
             </div>
+            <hr/>
             <div className="pergunta" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
               <p>Como previnir uma submissão de form no click de um elemento Submit?</p>
               <div>
                 <input type="radio" name="opcao04"/>defaultPrevent()
                 <input type="radio" name="opcao04"/>preventDefault()
-                <input type="radio" name="opcao04"/>cancelDefault()
                 <input type="radio" name="opcao04"/>stopDefault()
               </div>
             </div>
@@ -259,7 +261,7 @@ function Cadastro() {
               setShowModalTeste(false);
             }
             }>Salvar</div>
-            <div className="backBtn" onClick={() => setShowModal(false)}>
+            <div className="backBtn" onClick={() => setShowModalTeste(false)}>
               Voltar
             </div>
           </div>

@@ -51,9 +51,9 @@ function Recrutador() {
                                     <div className="candidatoImg">
                                         <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                                     </div>
-                                    <h4 style={{ margin: '0' }}>Nome: {user.name}</h4>
-                                    <p style={{ margin: '0' }}>Perfil: {user.type}</p>
-                                    <p style={{ margin: '0' }}>Nível: {user.level}</p>
+                                    <h4 style={{ margin: '5px 0' }}>Nome: {user.name}</h4>
+                                    <p style={{ margin: '5px 0' }}>Perfil: {user.type}</p>
+                                    <p style={{ margin: '5px 0' }}>Nível: {user.level}</p>
                                 </div>
                                 <div className="card-candidato-footer" onClick={() => window.location.href = '/perfilReview'}>
                                     <p>Saiba Mais</p>
@@ -101,7 +101,7 @@ function Recrutador() {
                                         }
                                     },
                                     "color": {
-                                        "value": "#1b1e34"
+                                        "value": "#FFE600"
                                     },
                                     "shape": {
                                         "type": "polygon",
@@ -195,7 +195,7 @@ function Recrutador() {
                                 },
                                 "retina_detect": true,
                                 "background": {
-                                    "color": "#efefef",
+                                    "color": "#2E2E38",
                                     "image": "",
                                     "position": "50% 50%",
                                     "repeat": "no-repeat",

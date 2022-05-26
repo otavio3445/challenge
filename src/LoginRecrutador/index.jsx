@@ -22,7 +22,7 @@ function LoginRecrutador() {
                         options={{
                             background: {
                                 color: {
-                                    value: "#1a1a1a",
+                                    value: "#2E2E38",
                                 },
                             },
                             style: {

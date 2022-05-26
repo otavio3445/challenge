@@ -22,7 +22,7 @@ function LoginCandidato() {
                         options={{
                             background: {
                                 color: {
-                                    value: "#04006b",
+                                    value: "#2E2E38",
                                 },
                             },
                             style: {

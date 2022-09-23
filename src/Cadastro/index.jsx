@@ -1,12 +1,52 @@
 import React, { useState } from 'react';
 import Slider from 'react-slick/lib/slider';
+import InputMask from "react-input-mask";
 import '../index.css';
+import { WithContext as ReactTags } from 'react-tag-input';
+import keyWords from './keyWords';
 
 function Cadastro() {
 
   const [testeVoc, settesteVoc] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
+  const [tags, setTags] = useState([]);
+
+  const KeyCodes = {
+    comma: 188,
+    enter: 13
+  };
+
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+  const suggestions = keyWords.map(word => {
+    return {
+      id: word,
+      text: word
+    };
+  });
+
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = tag => {
+    setTags([...tags, tag]);
+  };
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const newTags = tags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+  };
+
+  const handleTagClick = index => {
+    console.log('The tag at index ' + index + ' was clicked');
+  };
 
   const page01 = () => {
     return (
@@ -15,12 +55,13 @@ function Cadastro() {
         <input type="email" placeholder='Digite seu Email' />
         <input type="password" placeholder='Digite sua senha' />
         <input type="password" placeholder='Repita sua senha' />
-        <input type="number" name="" id="" placeholder='Digite sua idade' />
+        <InputMask mask="99/99/9999" placeholder='Data de Nascimento' />
+        <textarea placeholder='Descreva aqui os projetos que foram marcantes para você' className='txtAreaCandidato'/>
         <div className="btnsTeste">
           <div>
             <input type="radio" name="btnTeste" id="btnSei"
               onClick={() => { settesteVoc(true) }}
-            /><label htmlFor='#btnSei'>Já sei a área que vou seguir</label>
+            /><label htmlFor='#btnSei'>Já tenho alguns interesses</label>
           </div>
           <div>
             <input type="radio" name="btnTeste" id="btnNaoSei"
@@ -40,15 +81,18 @@ function Cadastro() {
   const page02 = () => {
     return (
       <div>
-        <select className='selectArea'>
-          <option>Desenvolvimento Fron-end</option>
-          <option>Desenvolvimento Back-end</option>
-          <option>Automação</option>
-          <option>UX Design</option>
-          <option>Infraestrutura</option>
-          <option>Agile Coach</option>
-          <option>Scrum Master</option>
-        </select>
+        <ReactTags
+          tags={tags}
+          suggestions={suggestions}
+          delimiters={delimiters}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          handleDrag={handleDrag}
+          handleTagClick={handleTagClick}
+          inputFieldPosition="bottom"
+          placeholder='Digite seus interesses'
+          autocomplete
+        />
         <div className='btnConcluir' onClick={() => window.location.href = '/'}>Concluir Cadastro</div>
       </div>
     )

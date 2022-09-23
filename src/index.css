@@ -178,30 +178,36 @@ body {
   font-family: sans-serif;
 }
 
-.card-curso-holder, .card-vaga-holder {
+.card-curso-holder,
+.card-vaga-holder {
   text-align: center;
   height: 30vh;
   display: flex !important;
   justify-content: center;
 }
 
-.card-curso, .card-vaga {
+.card-curso,
+.card-vaga {
   width: 90%;
 }
-.card-curso:hover, .card-vaga:hover {
+
+.card-curso:hover,
+.card-vaga:hover {
   transform: scale(1.1);
 }
 
-.candidatoHolder > h1 {
+.candidatoHolder>h1 {
   display: flex;
   justify-content: center;
   font-family: monospace;
 }
-.candidatoHolder > h1:not(:first-child) {
+
+.candidatoHolder>h1:not(:first-child) {
   padding-top: 40px;
 }
 
-.card-curso-header, .card-vaga-header {
+.card-curso-header,
+.card-vaga-header {
   height: 10rem;
   align-items: center;
   display: flex;
@@ -213,17 +219,19 @@ body {
   border-radius: 35px 35px 0 0;
 }
 
-.card-curso-footer, .card-vaga-footer, .card-candidato-footer {
+.card-curso-footer,
+.card-vaga-footer,
+.card-candidato-footer {
   background-color: #8f0000;
-    padding: 0;
-    margin: 0;
-    height: 3rem;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-family: monospace;
-    font-size: 19px;
-    color: white;
+  padding: 0;
+  margin: 0;
+  height: 3rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family: monospace;
+  font-size: 19px;
+  color: white;
 }
 
 .card-vaga-header {
@@ -231,7 +239,8 @@ body {
   border-radius: 10px 10px 0 0;
 }
 
-.card-vaga-footer, .card-candidato-footer {
+.card-vaga-footer,
+.card-candidato-footer {
   cursor: pointer;
   background-color: #2e8f00;
 }
@@ -266,4 +275,83 @@ body {
   justify-content: center;
   font-size: 41px;
   cursor: pointer;
+}
+
+div.ReactTags__tags {
+  position: relative;
+}
+
+/* Styles for the input */
+div.ReactTags__tagInput {
+  width: 200px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+div.ReactTags__tagInput input.ReactTags__tagInputField,
+div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+  height: 31px;
+  margin: 0;
+  font-size: 12px;
+  width: 100%;
+  border: 1px solid #eee;
+  padding: 0 4px;
+}
+
+/* Styles for selected tags */
+div.ReactTags__selected span.ReactTags__tag {
+  border: 1px solid #ddd;
+  background: #eee;
+  font-size: 13px;
+  display: inline-block;
+  padding: 6px;
+  margin: 0 5px 5px 5px;
+  cursor: default !important;
+  border-radius: 2px;
+}
+
+.ReactTags__remove {
+  color: #5e5e5e;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Styles for suggestions */
+div.ReactTags__suggestions {
+  position: absolute;
+  color: #000 !important;
+  font-weight: normal !important;
+  font-size: 14px !important;
+}
+
+div.ReactTags__suggestions ul {
+  list-style-type: none;
+  box-shadow: .05em .01em .5em rgba(0, 0, 0, .2);
+  background: white;
+  width: 200px;
+}
+
+div.ReactTags__suggestions li {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 10px;
+  margin: 0;
+}
+
+div.ReactTags__suggestions li mark {
+  text-decoration: underline;
+  background: none;
+  font-weight: 600;
+}
+
+div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+  background: #b7cfe0;
+  cursor: pointer;
+}
+
+.txtAreaCandidato {
+  width: 100%;
+  height: 5rem;
+  resize: none;
+  padding: 5px;
+  border-radius: 10px;
 }

@@ -28,8 +28,6 @@ export async function getRecFB() {
 
   export async function uploadImage(cpf, file) {
     const imagesRef = ref(storage, cpf);
-    console.log(file);
-    console.log(imagesRef);
     await uploadBytes(imagesRef, file).then((snap) => {
       console.log('File Uploaded');
     }).catch(err => console.log(err))

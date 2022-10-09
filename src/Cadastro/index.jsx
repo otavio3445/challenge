@@ -44,7 +44,9 @@ function Cadastro() {
       levelUser
     }
 
-    await addDoc(userCollectionRef, doc);
+    await addDoc(userCollectionRef, doc).then(res => {
+      doc.id = res.id;
+    });
     history('/perfil', {state: {user: doc}});
   }
 

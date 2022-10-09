@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from '@firebase/firestore';
+import { getFirestore, collection, getDocs, updateDoc, doc } from '@firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from '@firebase/storage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAQXw5FAmALWpQYwHG6EVTMNpZk-5nWbJQ",
@@ -12,6 +13,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
+const storage = getStorage(app, "gs://bd-challenge-7729a.appspot.com");
 const bd_users = collection(firestore, "users");
 const bd_recs = collection(firestore, "recs");
 
@@ -22,5 +24,24 @@ export async function getUsersFB() {
 export async function getRecFB() {
     const users = await getDocs(bd_recs);
     return users
+  }
+
+  export async function uploadImage(cpf, file) {
+    const imagesRef = ref(storage, cpf);
+    console.log(file);
+    console.log(imagesRef);
+    await uploadBytes(imagesRef, file).then((snap) => {
+      console.log('File Uploaded');
+    }).catch(err => console.log(err))
+  }
+  
+  export async function getUrlImg(cpf) {
+    const imagesRef = ref(storage, cpf);
+    return await getDownloadURL(imagesRef).then(url => url)
+  }
+
+  export async function updateDocFB(id, data) {
+    const document = doc(firestore, "users", id)
+    await updateDoc(document, data);
   }
 export const db = getFirestore(app);

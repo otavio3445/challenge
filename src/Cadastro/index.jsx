@@ -6,6 +6,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import InputMask from "react-input-mask";
 import keyWords from './keyWords';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 function Cadastro() {
 
@@ -31,6 +32,7 @@ function Cadastro() {
   const cadastrar = async(name, age, email, senha, github, linkedin, descricao, interesses, levelUser) => {
 
     let doc = {
+      id: uuidv4(),
       name,
       age,
       email,

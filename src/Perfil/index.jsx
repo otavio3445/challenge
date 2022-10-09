@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../index.css';
 import { AiFillStar, AiOutlineStar, AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { useLocation } from 'react-router';
+import { getUrlImg, updateDocFB, uploadImage } from '../firebase-config';
 
 function Perfil() {
 
     const location = useLocation();
 
     console.log(location);
+
+    const [photoUrl, setphotoUrl] = useState(location.state.user.id ? location.state.user.id : 'https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg')
 
     const validateConhecimento = () => {
         switch (location.state.user.levelUser) {
@@ -22,12 +25,39 @@ function Perfil() {
         }
     }
 
+    const uploadPhoto = async (cpf, file) => {
+        console.log(file);
+        if (file) {
+            await uploadImage(cpf, file)
+        }
+    }
+
+    const validatePhoto = async (foto) => {
+        await uploadPhoto(`${location.state.user.name}_perfil`, foto);
+        await getUrlImg(`${location.state.user.name}_perfil`).then(url => {
+            setphotoUrl(url);
+        })
+        let newDoc = location.state.user;
+        newDoc.perfil = photoUrl
+        await updateDocFB(newDoc.id, newDoc);
+    }
     return (
         <div className="containerPerfil">
             <div className="subcontainerPerfil">
                 <div className="sidebar">
                     <div className="imgCandidatoPerfil">
-                        <img alt='' src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                        <div className="crop">
+                            <img alt='' src={photoUrl} width={'200px'} />
+                        </div>
+                        <form>
+                            <div className='photoPerfil'>
+                                <label for="arquivo">Enviar arquivo</label>
+                                <input type="file" name="arquivo" id="arquivo" onChange={(e) => {
+                                    validatePhoto(e.target.files[0]);
+                                }} />
+                            </div>
+                        </form>
+
                         <div className="btnVagas" onClick={() => window.location.href = '/vagasecursos'}>
                             Visualizar Vagas e Cursos
                         </div>

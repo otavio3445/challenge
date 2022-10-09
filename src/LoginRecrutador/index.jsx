@@ -17,7 +17,7 @@ function LoginRecrutador() {
         if (email !== "" && senha !== "") {
             users.forEach(user => {
                 if (email === user.data().email) {
-                    history('/perfil', {state:{user: user.data()}})
+                    history('/Recrutador', {state:{user: user.data()}})
                 } else {
                     setshowMessage(true);
                 }

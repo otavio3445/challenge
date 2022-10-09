@@ -1,31 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import '../index.css';
-import { IoTrophySharp } from 'react-icons/io5';
-import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar, AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { GrDocumentDownload } from 'react-icons/gr';
+import { useLocation } from 'react-router';
 
 function PerfilRec() {
 
-    const linkRefGithub = useRef();
+    const location = useLocation();
 
-    const [enableInput, setenableInput] = useState(true);
-    const [btnName, setBtnName] = useState(true);
+    const validateConhecimento = () => {
+        switch (location.state.user.levelUser) {
+            case 1:
+                return <div><AiFillStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+            case 2:
+                return <div><AiFillStar /><AiFillStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+            case 3:
+                return <div><AiFillStar /><AiFillStar /><AiFillStar /><AiOutlineStar /><AiOutlineStar /></div>
+            default:
+                return <div><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+        }
+    }
 
-    const [nome, setnome] = useState('Francisca');
-    const [sobreNome, setsobre] = useState('Santos');
-    const [idade, setidade] = useState('21');
-    const [email, setemail] = useState('fran@gmail.com');
-
-    const [linkGitHub, setlinkGitHub] = useState(false);
-    const [linkLinkedin, setlinkLinkedin] = useState(false);
-    const [showLink, setshowLink] = useState(true);
-
+    console.log(location.state);
     return (
         <div className="containerPerfil">
             <div className="subcontainerPerfil">
                 <div className="sidebar">
                     <div className="imgCandidatoPerfil">
-                        <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                        <img alt='' src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                         <div>
                             <a href={require('../Assets/CV.txt')} download="CV.txt" className='downloadCv'>Baixar CV</a>
                             <GrDocumentDownload fontSize="30px" />
@@ -35,65 +37,38 @@ function PerfilRec() {
                 <div className="infoHolder">
                     <div className='inforSubHolder'>
                         <label htmlFor="">Nome: </label>
-                        <input type="text" name="" id="" value={nome} disabled={enableInput} onChange={(e) => {
-                            setnome(e.target.value)
-                        }} />
-                    </div>
-                    <div className='inforSubHolder'>
-                        <label htmlFor="">Sobrenome: </label>
-                        <input type="text" name="" id="" value={sobreNome} disabled={enableInput} onChange={(e) => {
-                            setsobre(e.target.value)
-                        }} />
+                        <input type="text" name="" id="" value={location.state.user.name} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
                         <label htmlFor="">Email: </label>
-                        <input type="text" name="" id="" value={email} disabled={enableInput} onChange={(e) => {
-                            setemail(e.target.value)
-                        }} />
+                        <input type="text" name="" id="" value={location.state.user.email} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
-                        <label htmlFor="">Idade: </label>
-                        <input type="text" name="" id="" value={idade} disabled={enableInput} onChange={(e) => {
-                            setidade(e.target.value)
-                        }} />
+                        <label htmlFor="">Data de Nascimento: </label>
+                        <input type="text" name="" id="" value={location.state.user.age} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
                         <label htmlFor="">Área de Interesse: </label>
-                        <select disabled={enableInput}>
-                            <option id='Front'>Desenvolvimento Fron-end</option>
-                            <option id='Back' selected>Desenvolvimento Back-end</option>
-                            <option id='Auto'>Automação</option>
-                            <option id='UX'>UX Design</option>
-                            <option id='Infra'>Infraestrutura</option>
-                            <option id='AC'>Agile Coach</option>
-                            <option id='SM'>Scrum Master</option>
+                        <select>
+                            {location.state.user.interesses.map(el=> <option>{el}</option>)}
                         </select>
                     </div>
                     <div className='inforSubHolder'>
-                        Nível de conhecimento: <strong>Pleno</strong> <IoTrophySharp color='#949494' />
+                        Nível de conhecimento:
+                        {validateConhecimento()}
                     </div>
                     <div className='inforSubHolder'>
                         Links:
-                        {showLink === true ?
-                            <AiFillGithub fontSize={'35px'} onClick={() => window.open(linkGitHub, '_blank')} />
-                            : <input type={'text'} placeholder="Insira o link do Github" onChange={(e) => {
-                                setlinkGitHub(e.target.value);
-                            }} />
-                        }
-                        {showLink === true ?
-                            <AiFillLinkedin fontSize={'35px'} color='blue' onClick={() => window.open(linkLinkedin, '_blank')} />
-                            : <input type={'text'} placeholder="Insira o link do LinkedIn" onChange={(e) => {
-                                setlinkLinkedin(e.target.value);
-                            }} />
-                        }
+                            <AiFillGithub fontSize={'35px'} onClick={() => window.open(location.state.user.github, '_blank')} />
+                            <AiFillLinkedin fontSize={'35px'} color='blue' onClick={() => window.open(location.state.user.linkedin, '_blank')} />
                     </div>
                     <hr />
                     <div className='inforSubHolder badgeHolder'>
                         <h3 style={{ marginTop: '0' }}>Conquistas na plataforma:</h3>
                         <div>
-                            <img src={require('../Assets/badge01.png')} width={'100px'} />
-                            <img src={require('../Assets/badge02.png')} width={'100px'} />
-                            <img src={require('../Assets/badge03.png')} width={'100px'} />
+                            <img alt='' src={require('../Assets/badge01.png')} width={'100px'} />
+                            <img alt='' src={require('../Assets/badge02.png')} width={'100px'} />
+                            <img alt='' src={require('../Assets/badge03.png')} width={'100px'} />
                         </div>
                     </div>
                     <div className='inforSubHolder badgeHolder'>

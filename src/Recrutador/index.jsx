@@ -5,12 +5,9 @@ import { loadFull } from "tsparticles";
 import Slider from 'react-slick/lib/slider';
 import { db } from '../firebase-config';
 import { collection, getDocs } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom';
 
 function Recrutador() {
-
-    const [senior, setsenior] = useState(true);
-    const [pleno, setpleno] = useState(true);
-    const [junior, setjunior] = useState(true);
     const [users, setusers] = useState([]);
     const usersCollectionRef = collection(db, "users")
 
@@ -20,6 +17,7 @@ function Recrutador() {
             setusers(data.docs.map((doc) => ({ ...doc.data() })));
         }
         getUser();
+        // eslint-disable-next-line
     }, []);
 
     const settings = {
@@ -37,8 +35,9 @@ function Recrutador() {
     };
 
     const particlesLoaded = (container) => {
-        console.log(container);
     };
+
+    const history = useNavigate();
 
     const cardsVagas = () => {
         return (
@@ -52,23 +51,13 @@ function Recrutador() {
                                         <img alt="candidato 01" src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
                                     </div>
                                     <h4 style={{ margin: '5px 0' }}>Nome: {user.name}</h4>
-                                    <p style={{ margin: '5px 0' }}>Perfil: {user.type}</p>
-                                    <p style={{ margin: '5px 0' }}>Nível: {user.level}</p>
                                 </div>
-                                <div className="card-candidato-footer" onClick={() => window.location.href = '/perfilReview'}>
+                                <div className="card-candidato-footer" onClick={() => history('/perfilReview', {state: {user: user}})}>
                                     <p>Saiba Mais</p>
                                 </div>
                             </div>
                         </div>
-                        if (junior === true && user.level === 'Júnior') {
-                            return layout
-                        } 
-                        if (pleno === true && user.level === 'Pleno') {
-                            return layout
-                        } 
-                        if (senior === true && user.level === 'Sênior') {
-                            return layout
-                        } 
+                        return layout
                         
                     })
                 }
@@ -210,41 +199,6 @@ function Recrutador() {
                     <div className="candidatoHolder">
 
                         <h1>Candidatos:</h1>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label>Filtrar por:</label>
-                            <select onChange={(e) => {
-                                switch (e.target.selectedIndex) {
-                                    case 0:
-                                        setjunior(true);
-                                        setpleno(true);
-                                        setsenior(true);
-                                        break;
-                                    case 1:
-                                        setjunior(false);
-                                        setpleno(false);
-                                        setsenior(true);
-
-                                        break;
-                                    case 2:
-                                        setjunior(false);
-                                        setpleno(true);
-                                        setsenior(false);
-
-                                        break;
-                                    case 3:
-                                        setjunior(true);
-                                        setpleno(false);
-                                        setsenior(false);
-
-                                        break;
-                                }
-                            }}>
-                                <option>Todos</option>
-                                <option>Sênior</option>
-                                <option>Pleno</option>
-                                <option>Júnior</option>
-                            </select>
-                        </div>
                         {cardsVagas()}
                     </div>
                 </div>

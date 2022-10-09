@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
+import { getRecFB } from '../firebase-config';
 import '../index.css';
 
 function LoginRecrutador() {
+    const history = useNavigate();
+
+    const [email, setemail] = useState("");
+    const [senha, setsenha] = useState("");
+    const [showMessage, setshowMessage] = useState(false);
+
+    const validateLogin = async () => {
+        const users = await getRecFB();
+        if (email !== "" && senha !== "") {
+            users.forEach(user => {
+                if (email === user.data().email) {
+                    history('/Recrutador', {state:{user: user.data()}})
+                } else {
+                    setshowMessage(true);
+                }
+            })
+        }
+    }
     const particlesInit = async (main) => {
         await loadFull(main);
     };
 
     const particlesLoaded = (container) => {
-        console.log(container);
     };
     return (
         <>
@@ -101,12 +120,13 @@ function LoginRecrutador() {
                         <div>
                             <h2>Login</h2>
                             <div>
-                                <input type="text" name="txtEmail" id=""  placeholder='Email' required/>
+                                <input type="text" name="txtEmail" id=""  placeholder='Email' required onChange={(e) => setemail(e.target.value)} autoComplete='off'/>
                             </div>
                             <div>
-                                <input type="password" name="txtEmail" id="" placeholder='Senha'required/>
+                                <input type="password" name="txtEmail" id="" placeholder='Senha'required onChange={(e) => setsenha(e.target.value)} autoComplete='off'/>
                             </div>
-                            <div className="btnLogin" onClick={() => window.location.href = "/recrutador"}>Login</div>
+                            <div className="btnLogin" onClick={validateLogin}>Login</div>
+                            {showMessage && <h3>Email ou senha incorretos, por favor tente novamente!</h3>}
                         </div>
                         <div className="backBtn" onClick={() => window.location.href = "/"}>
                             Voltar

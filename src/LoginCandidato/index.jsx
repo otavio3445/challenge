@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
+import { getUsersFB } from '../firebase-config';
 import '../index.css';
 
 function LoginCandidato() {
+    const history = useNavigate();
+
+    const [email, setemail] = useState("");
+    const [senha, setsenha] = useState("");
+    const [showMessage, setshowMessage] = useState(false);
+
+    const validateLogin = async () => {
+        const users = await getUsersFB();
+        if (email !== "" && senha !== "") {
+            users.forEach(user => {
+                if (email === user.data().email) {
+                    history('/perfil', {state:{user: user.data()}})
+                } else {
+                    setshowMessage(true);
+                }
+            })
+        }
+    }
     const particlesInit = async (main) => {
         await loadFull(main);
     };
 
     const particlesLoaded = (container) => {
-        console.log(container);
     };
+
     return (
         <>
             <div style={{ position: 'relative' }}>
@@ -101,14 +121,15 @@ function LoginCandidato() {
                         <div>
                             <h2>Login</h2>
                             <div>
-                                <input type="text" name="txtEmail" id="" placeholder='Email' required />
+                                <input type="text" name="txtEmail" id="" placeholder='Email' required onChange={(e) => setemail(e.target.value)} autoComplete='off'/>
                             </div>
                             <div>
-                                <input type="password" name="txtEmail" id="" placeholder='Senha' required />
+                                <input type="password" name="txtEmail" id="" placeholder='Senha' required onChange={(e) => setsenha(e.target.value)} autoComplete='off'/>
                             </div>
                             <div className="orderBtnsLogin">
-                                <div className="btnLogin" onClick={() => window.location.href = "/perfil"}>Login</div>
+                                <div className="btnLogin" onClick={validateLogin}>Login</div>
                                 <a href="/cadastro" className='cadCandidato'>Cadastrar</a>
+                                {showMessage && <h3>Email ou senha incorretos, por favor tente novamente!</h3>}
                             </div>
                         </div>
                         <div className="backBtn" onClick={() => window.location.href = "/"}>

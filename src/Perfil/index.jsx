@@ -1,30 +1,60 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import '../index.css';
-import { IoTrophySharp } from 'react-icons/io5';
-import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar, AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { useLocation } from 'react-router';
+import { getUrlImg, updateDocFB, uploadImage } from '../firebase-config';
 
 function Perfil() {
 
-    const linkRefGithub = useRef();
+    const location = useLocation();
 
-    const [enableInput, setenableInput] = useState(true);
-    const [btnName, setBtnName] = useState(true);
+    const [photoUrl, setphotoUrl] = useState(location.state.user.perfil ? location.state.user.perfil : 'https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg')
 
-    const [nome, setnome] = useState('Francisca');
-    const [sobreNome, setsobre] = useState('Santos');
-    const [idade, setidade] = useState('21');
-    const [email, setemail] = useState('fran@gmail.com');
+    const validateConhecimento = () => {
+        switch (location.state.user.levelUser) {
+            case 1:
+                return <div><AiFillStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+            case 2:
+                return <div><AiFillStar /><AiFillStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+            case 3:
+                return <div><AiFillStar /><AiFillStar /><AiFillStar /><AiOutlineStar /><AiOutlineStar /></div>
+            default:
+                return <div><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /><AiOutlineStar /></div>
+        }
+    }
 
-    const [linkGitHub, setlinkGitHub] = useState(false);
-    const [linkLinkedin, setlinkLinkedin] = useState(false);
-    const [showLink, setshowLink] = useState(true);
+    const uploadPhoto = async (cpf, file) => {
+        if (file) {
+            await uploadImage(cpf, file)
+        }
+    }
 
+    const validatePhoto = async (foto) => {
+        await uploadPhoto(`${location.state.user.name}_perfil`, foto);
+        await getUrlImg(`${location.state.user.name}_perfil`).then(url => {
+            setphotoUrl(url);
+        })
+        let newDoc = location.state.user;
+        newDoc.perfil = photoUrl
+        await updateDocFB(newDoc.id, newDoc);
+    }
     return (
         <div className="containerPerfil">
             <div className="subcontainerPerfil">
                 <div className="sidebar">
                     <div className="imgCandidatoPerfil">
-                        <img src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg" width={'200px'} />
+                        <div className="crop">
+                            <img alt='' src={photoUrl} width={'200px'} />
+                        </div>
+                        <form>
+                            <div className='photoPerfil'>
+                                <label for="arquivo">Enviar arquivo</label>
+                                <input type="file" name="arquivo" id="arquivo" onChange={(e) => {
+                                    validatePhoto(e.target.files[0]);
+                                }} />
+                            </div>
+                        </form>
+
                         <div className="btnVagas" onClick={() => window.location.href = '/vagasecursos'}>
                             Visualizar Vagas e Cursos
                         </div>
@@ -40,59 +70,33 @@ function Perfil() {
                 <div className="infoHolder">
                     <div className='inforSubHolder'>
                         <label htmlFor="">Nome: </label>
-                        <input type="text" name="" id="" value={nome} disabled={enableInput} onChange={(e) => {
-                            setnome(e.target.value)
-                        }} />
-                    </div>
-                    <div className='inforSubHolder'>
-                        <label htmlFor="">Sobrenome: </label>
-                        <input type="text" name="" id="" value={sobreNome} disabled={enableInput} onChange={(e) => {
-                            setsobre(e.target.value)
-                        }} />
+                        <input type="text" name="" id="" value={location.state.user.name} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
                         <label htmlFor="">Email: </label>
-                        <input type="text" name="" id="" value={email} disabled={enableInput} onChange={(e) => {
-                            setemail(e.target.value)
-                        }} />
+                        <input type="text" name="" id="" value={location.state.user.email} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
-                        <label htmlFor="">Idade: </label>
-                        <input type="text" name="" id="" value={idade} disabled={enableInput} onChange={(e) => {
-                            setidade(e.target.value)
-                        }} />
+                        <label htmlFor="">Data de Nascimento: </label>
+                        <input type="text" name="" id="" value={location.state.user.age} disabled={true} />
                     </div>
                     <div className='inforSubHolder'>
-                        <label htmlFor="">Área de Interesse: </label>
-                        <select disabled={enableInput}>
-                            <option id='Front'>Desenvolvimento Fron-end</option>
-                            <option id='Back' selected>Desenvolvimento Back-end</option>
-                            <option id='Auto'>Automação</option>
-                            <option id='UX'>UX Design</option>
-                            <option id='Infra'>Infraestrutura</option>
-                            <option id='AC'>Agile Coach</option>
-                            <option id='SM'>Scrum Master</option>
+                        <label htmlFor="">Interesses: </label>
+                        <select>
+                            {location.state.user.interesses.map(el => <option>{el}</option>)}
                         </select>
                     </div>
                     <div className='inforSubHolder'>
-                        Nível de conhecimento: <strong>Pleno</strong> <IoTrophySharp color='#949494'/>
+                        Nível de conhecimento:
+                        {validateConhecimento()}
                     </div>
                     <div className='inforSubHolder'>
-                        Links: 
-                        {showLink === true ? 
-                            <AiFillGithub fontSize={'25px'} onClick={() => window.open(linkGitHub, '_blank')}/>
-                            : <input type={'text'} placeholder="Insira o link do Github" onChange={(e) => {
-                                setlinkGitHub(e.target.value);
-                            }}/>
-                        }
-                        {showLink === true ? 
-                            <AiFillLinkedin fontSize={'25px'} color='blue' onClick={() => window.open(linkLinkedin, '_blank')}/>
-                            : <input type={'text'} placeholder="Insira o link do LinkedIn" onChange={(e) => {
-                                setlinkLinkedin(e.target.value);
-                            }}/>
-                        }
+                        Links:
+                        <AiFillGithub fontSize={'25px'} onClick={() => window.open(location.state.user.github, '_blank')} />
+                        <AiFillLinkedin fontSize={'25px'} color='blue' onClick={() => window.open(location.state.user.linkedin, '_blank')} />
+
                     </div>
-                    <hr/>
+                    <hr />
                     <div className="iframesHolder">
                         <p>Vídeos relacionados a sua área:</p>
                         <iframe width="300" height="150" src="https://www.youtube.com/embed/1nVUfZg2dSA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -100,11 +104,11 @@ function Perfil() {
                         <iframe width="300" height="150" src="https://www.youtube.com/embed/1nVUfZg2dSA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         <iframe width="300" height="150" src="https://www.youtube.com/embed/1nVUfZg2dSA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div className="btnEdit" onClick={() => {
+                    {/* <div className="btnEdit" onClick={() => {
                         setBtnName(!btnName);
-                        setenableInput(!enableInput);
+                        setenableInput(!true);
                         setshowLink(!showLink);
-                    }}>{btnName ? 'Editar' : 'Salvar'}</div>
+                    }}>{btnName ? 'Editar' : 'Salvar'}</div> */}
                 </div>
             </div>
             <div className="backBtn" onClick={() => window.location.href = "/loginCandidato"}>

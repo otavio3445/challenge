@@ -1,41 +1,91 @@
 import React, { useState } from 'react';
 import '../index.css';
 import {db} from '../firebase-config';
-import {collection, addDoc} from 'firebase/firestore'
+import {collection, addDoc} from 'firebase/firestore';
+import { WithContext as ReactTags } from 'react-tag-input';
+import InputMask from "react-input-mask";
+import keyWords from './keyWords';
+import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 function Cadastro() {
 
   const [testeVoc, settesteVoc] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showModalTeste, setShowModalTeste] = useState(false);
-  const [showEnd, setShowEnd] = useState(false);
-  const [level, setLevel] = useState('');
 
   const [name, setname] = useState('');
   const [age, setage] = useState('');
   const [email, setemail] = useState('');
   const [senha, setsenha] = useState('');
-  const [typeUser, settypeUser] = useState('Front-end');
-  const [levelUser, setlevelUser] = useState('');
   const [github, setgithub] = useState('');
   const [linkedin, setlinkedin] = useState('');
+  const [descricao, setdescricao] = useState('');
+  const [interesses, setinteresses] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [levelUser, setlevelUser] = useState(0)
+
+  const history = useNavigate();
 
   const userCollectionRef = collection(db, 'users');
 
-  const cadastrar = async(name, age, email, senha, typeUser, levelUser, github, linkedin) => {
+  const cadastrar = async(name, age, email, senha, github, linkedin, descricao, interesses, levelUser) => {
 
-    await addDoc(userCollectionRef, {
-      name: name,
-      age: age,
-      email: email,
-      senha: senha,
-      level: levelUser,
-      type: typeUser,
-      github: github,
-      linkedin: linkedin
+    let doc = {
+      id: uuidv4(),
+      name,
+      age,
+      email,
+      senha,
+      descricao,
+      interesses,
+      github,
+      linkedin,
+      levelUser
+    }
+
+    await addDoc(userCollectionRef, doc).then(res => {
+      doc.id = res.id;
     });
-    window.location.href = '/perfil'
+    history('/perfil', {state: {user: doc}});
   }
+
+  const KeyCodes = {
+    comma: 188,
+    enter: 13
+  };
+
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+  const suggestions = keyWords.map(word => {
+    return {
+      id: word,
+      text: word
+    };
+  });
+
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = tag => {
+    setinteresses([...interesses, tag.text]);
+    setTags([...tags, tag]);
+  };
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const newTags = tags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+  };
+
+  const handleTagClick = index => {
+    console.log('The tag at index ' + index + ' was clicked');
+  };
 
   const page01 = () => {
     return (
@@ -43,7 +93,8 @@ function Cadastro() {
         <input type="text" placeholder='Digite seu nome' onChange={(e) => setname(e.target.value)} />
         <input type="email" placeholder='Digite seu Email' onChange={(e) => setemail(e.target.value)}/>
         <input type="password" placeholder='Digite sua senha' onChange={(e) => setsenha(e.target.value)}/>
-        <input type="number" name="" id="" placeholder='Digite sua idade' onChange={(e) => setage(e.target.value)}/>
+        <InputMask required mask="99/99/9999" placeholder='Data de Nascimento' onChange={(e) => {setage(e.target.value)}}/>
+        <textarea required placeholder='Descreva aqui os projetos que foram marcantes para você' className='txtAreaCandidato' onChange={(e) => {setdescricao(e.target.value)}}/>
         <input type="text" placeholder='Link do GitHub' onChange={(e) => setgithub(e.target.value)}/>
         <input type="text" placeholder='Link do LinkedIn' onChange={(e) => setlinkedin(e.target.value)}/>
         <div className="btnsTeste">
@@ -62,9 +113,9 @@ function Cadastro() {
           {testeVoc === true ? page02() : ''}
           {testeVoc === false ? page03() : ''}
         </div> : ''}
-        {showEnd && <div className='btnConcluir' 
-        onClick={() => cadastrar(name, age, email, senha, typeUser, levelUser, github, linkedin)}>
-          Concluir Cadastro</div>}
+        <div className='btnConcluir' 
+        onClick={() => cadastrar(name, age, email, senha, github, linkedin, descricao, interesses, levelUser)}>
+          Concluir Cadastro</div>
 
       </form>
     )
@@ -72,27 +123,18 @@ function Cadastro() {
   const page02 = () => {
     return (
       <div>
-        <select className='selectArea' onChange={(e) => {
-          if (e.target.selectedIndex === 0) {
-            settypeUser('Front-end')
-          } else if (e.target.selectedIndex === 1) {
-            settypeUser('Back-end')
-          } else if (e.target.selectedIndex === 2) {
-            settypeUser('QA')
-          }else if (e.target.selectedIndex === 3) {
-            settypeUser('Infraestrutura')
-          }
-        }}>
-          <option>Desenvolvimento Fron-end</option>
-          <option>Desenvolvimento Back-end</option>
-          <option>Automação</option>
-          <option>Infraestrutura</option>
-        </select>
-        <div className='btnConcluir' onClick={() => setShowModalTeste(!showModalTeste)}>Fazer Teste de Conhecimento</div>
-        <p style={{ color: 'white' }}>{level !== '' ? level : ''}</p>
-        {level !== '' ? <div style={{backgroundColor: 'yellow'}} className='btnConcluir' 
-        onClick={() => cadastrar(name, age, email, senha, typeUser, levelUser, github, linkedin)}>
-          Concluir</div> : ''}
+        <ReactTags
+          tags={tags}
+          suggestions={suggestions}
+          delimiters={delimiters}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          handleDrag={handleDrag}
+          handleTagClick={handleTagClick}
+          inputFieldPosition="bottom"
+          placeholder='Digite seus interesses'
+          autocomplete
+        />
       </div>
     )
   }
@@ -170,18 +212,16 @@ function Cadastro() {
 
             <div className="btnSalvarTeste" onClick={() => {
               let number = (Math.random()*100).toFixed(0);
-              if (Number(number) >=75) {
-                settypeUser('Front-end')
-              } else if (Number(number) >=50) {
-                settypeUser('Back-end')
-              } else if (Number(number) >=25) {
-                settypeUser('QA')
+              let nivel = ''
+              if (Number(number) >=64) {
+                nivel =  3
+              } else if (Number(number) >=34) {
+                nivel =  2
               } else {
-                settypeUser('Infraestrutura')
+                nivel =  1
               }
+              setlevelUser(nivel);
               setShowModal(false)
-              setShowEnd(true)
-              settesteVoc(null)
             }
             }>Salvar</div>
             <div className="backBtn" onClick={() => setShowModal(false)}>
@@ -250,14 +290,13 @@ function Cadastro() {
               let number = (Math.random()*100).toFixed(0);
               let nivel = ''
               if (Number(number) >=64) {
-                nivel =  'Sênior'
+                nivel =  3
               } else if (Number(number) >=34) {
-                nivel =  'Pleno'
+                nivel =  2
               } else {
-                nivel =  'Júnior'
+                nivel =  1
               }
               setlevelUser(nivel);
-              setLevel(`Seu nível é: ${nivel}`);
               setShowModalTeste(false);
             }
             }>Salvar</div>

@@ -3,8 +3,30 @@ import '../index.css';
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
 import Slider from 'react-slick/lib/slider';
+import { getcursosFB, getVagasFB } from '../firebase-config';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function Candidato() {
+
+    const [vagas, setvagas] = useState([]);
+    const [cursos, setcursos] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            let aux = [];
+            let aux02 = [];
+            const vagasBanco = await getVagasFB();
+            const cursosBanco = await getcursosFB();
+
+            vagasBanco.forEach(vaga => aux.push(vaga.data()));
+            cursosBanco.forEach(curso => aux02.push(curso.data()));
+
+            setvagas([...aux]);
+            setcursos([...aux02]);
+        })()
+    }, [])
+
 
     const settings = {
         dots: true,
@@ -25,66 +47,20 @@ function Candidato() {
     const cardsCurso = () => {
         return (
             <Slider {...settings}>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>Introdução a lógica de programação</p>
+                {cursos.map(curso => {
+                    return (
+                        <div className="card-curso-holder">
+                            <div className="card-curso">
+                                <div className="card-curso-header">
+                                    <p>{curso.name}</p>
+                                </div>
+                                <div className="card-curso-footer">
+                                    <p>Duração: {curso.time}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 40h</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>Introdução a UX e UI</p>
-                        </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 20h</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>Introdução ao HTML e CSS</p>
-                        </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 10h</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>HTML Avançado</p>
-                        </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 24h</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>CSS Avançado</p>
-                        </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 34h</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-curso-holder">
-                    <div className="card-curso">
-                        <div className="card-curso-header">
-                            <p>Javascript ES6+</p>
-                        </div>
-                        <div className="card-curso-footer">
-                            <p>Duração: 76h</p>
-                        </div>
-                    </div>
-                </div>
+                    )
+                })}
             </Slider>
         )
     }
@@ -92,56 +68,21 @@ function Candidato() {
     const cardsVagas = () => {
         return (
             <Slider {...settings}>
-                <div className="card-vaga-holder">
-                    <div className="card-vaga">
-                        <div className="card-vaga-header">
-                            <p>Analista Front-end</p>
+                {vagas.map(vaga => {
+                    return (
+                        <div className="card-vaga-holder">
+                            <div className="card-vaga">
+                                <div className="card-vaga-header">
+                                    <p>{vaga.name}</p>
+                                </div>
+                                <div className="card-vaga-footer">
+                                    <p>Saiba Mais</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="card-vaga-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-vaga-holder">
-                    <div className="card-vaga">
-                        <div className="card-vaga-header">
-                            <p>Desenvolvedor Front-end</p>
-                        </div>
-                        <div className="card-vaga-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-vaga-holder">
-                    <div className="card-vaga">
-                        <div className="card-vaga-header">
-                            <p>Web Designer</p>
-                        </div>
-                        <div className="card-vaga-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-vaga-holder">
-                    <div className="card-vaga">
-                        <div className="card-vaga-header">
-                            <p>Desenvolvedor Full-Stack</p>
-                        </div>
-                        <div className="card-vaga-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="card-vaga-holder">
-                    <div className="card-vaga">
-                        <div className="card-vaga-header">
-                            <p>Analista Front-end</p>
-                        </div>
-                        <div className="card-vaga-footer">
-                            <p>Saiba Mais</p>
-                        </div>
-                    </div>
-                </div>
+                    )
+                })
+                }
             </Slider>
         )
     }
